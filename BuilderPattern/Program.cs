@@ -1,5 +1,11 @@
 ﻿using BuilderPattern;
 
+
+/*
+ Builder - pattern for better creating very complicated objects with
+ many flags and situational data. Builder is can create multiple 
+ objects or single object which depend from your needs.
+*/
 var receiptBuilder = new ReceiptPaymentBuilder()
     .AddTitle("Receipt payment of TTT store")
         .CreateBody()
