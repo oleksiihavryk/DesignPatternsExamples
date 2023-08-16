@@ -33,4 +33,4 @@ var p = new ProductsBox
     }
 };
 
-Console.WriteLine(p.Price);
+Console.WriteLine($"Total price for product - \"{p.Name}\" is {p.Price:C}");
