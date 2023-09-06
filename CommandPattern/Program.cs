@@ -8,9 +8,9 @@ array.CopyTo(copyArray, 0);
 
 //This pattern have an implementation in c# language.
 
-//This is a old way of using command pattern with implementation of single executing.
+//This is an old way of using command pattern with the implementation of a single executing.
 Console.WriteLine("This is an old way of using command pattern " +
-                  "with implementation of single executing"); ;
+                  "with the implementation of a single executing");
 
 var deleteRepeating = new DeleteRepeatingInArrayCommand<string>(array);
 var show = new ShowArrayCommand<string>(array);
@@ -24,9 +24,9 @@ deleteRepeating.Execute();
 Console.WriteLine("New array: ");
 show.Execute();
 
-//This is modern way of using command pattern with implementation of only executing.
-Console.WriteLine("This is a modern way of using command pattern " +
-                  "with implementation of single executing"); ;
+//This is a modern way of using command pattern with the implementation of a single execution.
+Console.WriteLine("This is a modern way of using command pattern with " +
+                  "the implementation of a single execution."); ;
 
 var deleteRepeatingLambda = () =>
 {
