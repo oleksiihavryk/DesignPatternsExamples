@@ -1,5 +1,5 @@
 ﻿/*
- * Iterator pattern also build-in for C# language.
+ * Iterator pattern like a "Command" and many other behavioral patterns build-in for C# language.
  * Almost all collection in .NET framework class library have interface IEnumerable
  * such as List<T>, Stack<T>, Queue<T>, Dictionary<TKEy, TValue> and ect.
  */
