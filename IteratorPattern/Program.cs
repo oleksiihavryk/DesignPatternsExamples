@@ -5,7 +5,7 @@
  */
 var list = new List<int> { 1, 2, 3, 100 };
 
-//There is IEnumerator interface is Iterator pattern.
+//In this example IEnumerator interface is Iterator pattern.
 Console.WriteLine("Build-in FCL implementation of Iterator pattern.");
 var enumerator = list.GetEnumerator();
 try
