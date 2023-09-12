@@ -1,7 +1,4 @@
-﻿// define CLASSIC or BUILDIN to get your wanted implementation 
-#define BUILDIN 
-
-using ObserverPattern;
+﻿using ObserverPattern;
 /*
  * Observer pattern have a build-in implementation in c# language.
  * In this example, I show you a classical and build-in implementations of this pattern.
@@ -9,44 +6,45 @@ using ObserverPattern;
 
 
 
-//There is a classical OOP implementation of this pattern without any argument.
 var counter = new Counter();
 
-Console.WriteLine($"Counter: {counter.Count}");
+var cis = new CounterIncrementerSubscriber(counter);
+var cas = new ConsoleAlertSubscriber();
 
-var obs1 = new KeyPressObserver();
-var cis1 = new CounterIncrementerSubscriber(counter);
-var cas1 = new ConsoleAlertSubscriber();
+//There is a classical OOP implementation of this pattern without any argument.
+var oh1 = new ClassicImplementationKeyDownListener();
+oh1.AddHandler(cis);
+oh1.AddHandler(cas);
 
-obs1.AddSubscriber(cis1);
-obs1.AddSubscriber(cas1);
-#if CLASSIC
-while (true)
-{
-    Console.ReadKey();
-    obs1.Notify();
-    Console.WriteLine($"Counter: {counter.Count}");
-}
-
-#endif
 //This is a in-build c# language implementation of the Observer pattern.
-var obs2 = new BuildInObserverExample();
+var oh2 = new BuildInImplementationKeyDownListener();
 
-obs2.Observer += (_, _) => counter.Increment();
-obs2.Observer += (_, _) => Console.WriteLine("Alert!!! Some event happened!");
-#if BUILDIN
-while (true)
-{
-    Console.ReadKey();
-    obs2.Notify();
-    Console.WriteLine($"Counter: {counter.Count}");
-}
+//In this parameter of EventHandler constructor can be also
+//a method with EventHandler delegate signature.
+var cisHandler = new EventHandler<EventArgs>((_, _) => cis.NotifyOn());
+var casHandler = new EventHandler<EventArgs>((_, _) => cas.NotifyOn());
 
-#endif
+oh2.Observer += cisHandler;
+oh2.Observer += casHandler;
 
-class BuildInObserverExample
-{
-    public event EventHandler<EventArgs> Observer;
+oh1.StartListeningAsync();
+Console.WriteLine("Now working a classical example of the observer pattern. " +
+                  "Minimal working time: 10s.");
+await Task.Delay(10000);
+await oh1.StopListeningAsync();
+Console.WriteLine("Working of a first example is stopped.");
 
-    public void Notify() => Observer(null, EventArgs.Empty);
-}
+var classicalButtonPressed = counter.Count;
+Console.WriteLine($"Count of pressing buttons: {classicalButtonPressed}");
+
+oh1.RemoveHandler(cis);
+oh1.RemoveHandler(cas);
+
+Console.WriteLine("Now working a build-in implementation example of the observer pattern. " +
+                  "Minimal working time: 10s.");
+oh2.StartListeningAsync();
+await Task.Delay(10000);
+await oh2.StopListeningAsync();
+Console.WriteLine("Working of a second example is stopped.");
+
+Console.WriteLine($"Count of pressing buttons: {counter.Count - classicalButtonPressed}");
